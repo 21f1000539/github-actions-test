@@ -1,0 +1,28 @@
+name: CI with Cache
+
+on: [push]  # Runs on every push to any branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Prime cache  # Setup Node (change if not JS project)
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    
+    - name: prime-cache-bbcec4c  # REQUIRED: Exact name & key from assignment
+      uses: actions/cache@v4
+      with:
+        path: ~/.npm  # Cache npm deps (or node_modules/ for your project)
+        key: cache-bbcec4c  # REQUIRED: Exact key
+    
+    - name: Install dependencies
+      run: npm ci  # Or pip install -r requirements.txt, etc.
+    
+    - name: Run tests (example)
+      run: npm test  # Replace with your test command
